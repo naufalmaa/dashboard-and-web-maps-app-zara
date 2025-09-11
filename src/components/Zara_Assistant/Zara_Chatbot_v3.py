@@ -217,11 +217,11 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 """})
 
             completion = client.chat.completions.create(
-                model="gpt-4o-mini-2024-07-18",
+                model="gpt-5-nano",
                 messages=messages,
-                temperature=0.0,
-                max_tokens=4000,
-                top_p=0.5
+                # temperature=0.0,
+                max_completion_tokens=4000,
+                # top_p=0.5
             )
             
             response_result = completion.choices[0].message.content
