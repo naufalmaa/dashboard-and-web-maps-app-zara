@@ -19,9 +19,9 @@ pip install -r requirements.txt
 KEY = "write-your-api-key-here"
 ```
 
-5. Run Python file "main.py" on terminal
+5. Run Python file "app.py" on terminal
 ```
-python main.py
+python app.py
 ```
 
 ### How to prompt?
