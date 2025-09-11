@@ -11,6 +11,8 @@ RESERVE_SLIDER = 'reserve-slider'
 
 RESTART_FILTER_MAP = 'restart-map'
 
+FROM_DATE_WELL = 'from-date-well'
+TO_DATE_WELL = 'to-date-well'
 WELL_NAME_MULTISELECT = 'multiselect-borehole'
 ORIENTATION_WELL_CHECKBOX  = 'checkbox_orientation_well'
 STATUS_WELL_CHECKBOX  = 'checkbox_status_well'

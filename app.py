@@ -106,7 +106,7 @@ def create_header_layout() -> html.Div:
                     className='header-center',
                     sx={'justifyContent': 'center'}
                     ),
-                    dmc.Space(h=50),
+                    # dmc.Space(h=10),
                 ],
             )
         ], className=cns.NAVBAR,
@@ -116,7 +116,7 @@ app.layout = html.Div(
     [
         create_header_layout(),
         create_layout(app, data),
-        dash.page_container
+        # dash.page_container
      ])
 
 

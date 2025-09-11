@@ -74,13 +74,13 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
             #     ]
             # ),
             
-            # div for webmaps
-            html.Div(
-                className=cns.MAP_CONTAINER,
-                children=[
-                    wmaps_layout.create_layout_map(app, source)
-                ]
-            ),
+            # # div for webmaps
+            # html.Div(
+            #     className=cns.MAP_CONTAINER,
+            #     children=[
+            #         wmaps_layout.create_layout_map(app, source)
+            #     ]
+            # ),
             
             # div for tab and tab list after map
             dmc.Tabs(
@@ -88,20 +88,33 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
                     dmc.TabsList(
                         [
                             dmc.Tab("Overview", value="1"),
-                            dmc.Tab("Production Performance Analysis", value="2"),
-                            dmc.Tab("Geology & Geophysics Analysis", value="3"),
+                            dmc.Tab("Operation Analysis", value="2"),
+                            dmc.Tab("Production Performance Analysis", value="3"),
+                            dmc.Tab("Geology & Geophysics Analysis", value="4"),
                             # dmc.Tab("Cost Analysis", value="4"),
                         ],
                         className=cns.MAIN_TABLIST, position='center', grow=True
                     ),
-                    # overview (chatbot, preview data, about data)
-                    dmc.TabsPanel(overview_layout.create_layout(app, source), value="1", className=cns.OVW_CONTAINER),
+                    
+                    # Overview Wmaps
+                    dmc.TabsPanel(children=[
+                        # div for webmaps
+                        html.Div(
+                            className=cns.MAP_CONTAINER,
+                            children=[
+                                wmaps_layout.create_layout_map(app, source)
+                            ]
+                        ),
+                    ], value="1", className=cns.OVW_CONTAINER),
+                    
+                    # Operation Analysis (chatbot, preview data, about data)
+                    dmc.TabsPanel(overview_layout.create_layout(app, source), value="2", className=cns.OVW_CONTAINER),
                     
                     # tabs for production performance analysis
-                    dmc.TabsPanel(production_performance_layout.create_layout(app, source), value="2", className=cns.PPD_CONTAINER),
+                    dmc.TabsPanel(production_performance_layout.create_layout(app, source), value="3", className=cns.PPD_CONTAINER),
                     
                     # tabs for gng analysis
-                    dmc.TabsPanel(gng_layout.create_layout(app, source), value="3", className=cns.GNG_CONTAINER),
+                    dmc.TabsPanel(gng_layout.create_layout(app, source), value="4", className=cns.GNG_CONTAINER),
                     
                     # tabs for cost analysis
                     # dmc.TabsPanel("This is for cost analysis layout. (in progress)", value="4", className=cns.CAD_CONTAINER),

@@ -20,12 +20,15 @@ def render(app: Dash, source: DataSource) -> html.Div:
     def create_table(dataset):
         if dataset is None:
             raise PreventUpdate
-        # Get a random sample of 5 rows
-        sample_data = random.sample(dataset, min(len(dataset), 7))
         
-        return sample_data
+        # Select the first 7 rows instead of a random sample
+        # first_rows = dataset
         
-        # return dataset
+        # print(f"first rows: {first_rows}")
+        
+        # print(f"dataset avaliable (5 first rows): {dataset[:5]}")
+        
+        return dataset
         
     return html.Div(className='table-div',
                     children=[
@@ -37,7 +40,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
                                 "sortable": True,
                                 "filter": True,
                             },
-                            dashGridOptions={"pagination": False},
+                            dashGridOptions={"pagination": True, "paginationPageSize":7, "paginationPageSizeSelector": False, "animateRows": False},
                             style={'height':'400px'}
                             
                         )

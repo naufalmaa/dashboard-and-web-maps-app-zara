@@ -14,6 +14,8 @@ def render(app: Dash, source: DataSource) -> html.Div:
     @app.callback(
         Output(ids.WELL_NAME_MULTISELECT, "value", allow_duplicate=True),
         [
+            Input(ids.FROM_DATE_WELL, "value"),
+            Input(ids.TO_DATE_WELL, "value"),
             Input(ids.ORIENTATION_WELL_CHECKBOX, "value"),
             Input(ids.STATUS_WELL_CHECKBOX, "value"),
             Input(ids.PURPOSE_WELL_CHECKBOX, "value"),
@@ -21,8 +23,12 @@ def render(app: Dash, source: DataSource) -> html.Div:
         ],
     )
     def filter_well_func(
-        chosen_orientation, chosen_status, chosen_purpose, chosen_type
+        chosen_from_date, chosen_to_date, chosen_orientation, chosen_status, chosen_purpose, chosen_type
     ):
+        # df_filtered_oil_prod = source.filter(
+        #     from_date=chosen_from_date, to_date=chosen_to_date
+        # ).to_dataframe
+        
         df_filtered_well_input = source.filter_well(
             orientation_well=chosen_orientation,
             status_well=chosen_status,

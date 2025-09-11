@@ -8,7 +8,7 @@ from ...components import ids, cns
 from ...components.Zara_Assistant import openai_api_key
 from ..Zara_Assistant import prompt
 
-import pandas as pd
+# import pandas as pd
 import time
 # import prompt
 
@@ -39,84 +39,84 @@ def contains_word(text, word_list):
     return False
 
 
-table_list = [
-    'table', 'summary', 'summarize', 'rangkum', 'rangkuman', 'tabel', 'daftar', 'rekap', 'rekapan',
-    'data', 'list', 'rincian', 'ringkasan', 'resume', 'overview', 'display table', 'tabulasi',
-    'lihat tabel', 'tampilkan tabel', 'show table', 'lihat data', 'generate table', 'create table',
-    'buat tabel', 'export table', 'data tabular', 'table format', 'tabel ringkasan',
-    'detail tabel', 'dataframe', 'df', 'row', 'kolom', 'kolom-kolom', 'baris', 'baris-baris',
-    'table report', 'rekap data', 'tabel hasil', 'result table', 'output table', 'matrix',
-    'tabel analisis', 'tabel informasi', 'tabular', 'info tabel'
-]
+# table_list = [
+#     'table', 'summary', 'summarize', 'rangkum', 'rangkuman', 'tabel', 'daftar', 'rekap', 'rekapan',
+#     'data', 'list', 'rincian', 'ringkasan', 'resume', 'overview', 'display table', 'tabulasi',
+#     'lihat tabel', 'tampilkan tabel', 'show table', 'lihat data', 'generate table', 'create table',
+#     'buat tabel', 'export table', 'data tabular', 'table format', 'tabel ringkasan',
+#     'detail tabel', 'dataframe', 'df', 'row', 'kolom', 'kolom-kolom', 'baris', 'baris-baris',
+#     'table report', 'rekap data', 'tabel hasil', 'result table', 'output table', 'matrix',
+#     'tabel analisis', 'tabel informasi', 'tabular', 'info tabel'
+# ]
 
-plot_list = [
-    'plot', 'graph', 'chart', 'diagram', 'visualisasi', 'visualisasi data', 'grafik', 'graf',
-    'line chart', 'bar chart', 'pie chart', 'scatter plot', 'histogram', 'box plot',
-    'donut chart', 'area chart', 'heatmap', 'timeseries', 'trend', 'kurva', 'plotkan',
-    'buat grafik', 'tampilkan grafik', 'show chart', 'generate plot', 'visualisasi grafik',
-    'visualisasi chart', 'buat diagram', 'grafik batang', 'grafik garis', 'grafik lingkaran',
-    'grafik sebar', 'grafik area', 'grafik tren', 'plot data', 'visual chart', 'plot hasil',
-    'data visual', 'render chart', 'grafik performa', 'visual report', 'output chart',
-    'plot summary', 'gambar grafik', 'grafik output', 'plot visualisasi'
-]
+# plot_list = [
+#     'plot', 'graph', 'chart', 'diagram', 'visualisasi', 'visualisasi data', 'grafik', 'graf',
+#     'line chart', 'bar chart', 'pie chart', 'scatter plot', 'histogram', 'box plot',
+#     'donut chart', 'area chart', 'heatmap', 'timeseries', 'trend', 'kurva', 'plotkan',
+#     'buat grafik', 'tampilkan grafik', 'show chart', 'generate plot', 'visualisasi grafik',
+#     'visualisasi chart', 'buat diagram', 'grafik batang', 'grafik garis', 'grafik lingkaran',
+#     'grafik sebar', 'grafik area', 'grafik tren', 'plot data', 'visual chart', 'plot hasil',
+#     'data visual', 'render chart', 'grafik performa', 'visual report', 'output chart',
+#     'plot summary', 'gambar grafik', 'grafik output', 'plot visualisasi'
+# ]
 
-def create_table(df):
-    columns, values = df.columns, df.values
-    header = [html.Tr([html.Th(col) for col in columns])]
-    rows = [html.Tr([html.Td(cell) for cell in row]) for row in values]
-    table = [html.Thead(header), html.Tbody(rows)]
-    return table
+# def create_table(df):
+#     columns, values = df.columns, df.values
+#     header = [html.Tr([html.Th(col) for col in columns])]
+#     rows = [html.Tr([html.Td(cell) for cell in row]) for row in values]
+#     table = [html.Thead(header), html.Tbody(rows)]
+#     return table
 
-def generate_prompt(df, question):
-    # Generate insights
-    insights = []
+# def generate_prompt(df, question):
+#     # Generate insights
+#     insights = []
 
-    # Basic DataFrame Information
-    insights.append(
-        f"The DataFrame contains {len(df)} rows and {len(df.columns)} columns."
-    )
-    insights.append("Here are the first 5 rows of the DataFrame:\n")
-    insights.append(df.head().to_string(index=False))
+#     # Basic DataFrame Information
+#     insights.append(
+#         f"The DataFrame contains {len(df)} rows and {len(df.columns)} columns."
+#     )
+#     insights.append("Here are the first 5 rows of the DataFrame:\n")
+#     insights.append(df.sample(min(5, len(df))).to_string(index=False))
 
-    # Summary Statistics
-    insights.append("\nSummary Statistics:")
-    insights.append(df.describe().to_string())
+#     # Summary Statistics
+#     insights.append("\nSummary Statistics:")
+#     insights.append(df.describe().to_string())
 
-    # Column Information
-    insights.append("\nColumn Information:")
-    for col in df.columns:
-        insights.append(f"- Column '{col}' has {df[col].nunique()} unique values.")
+#     # Column Information
+#     insights.append("\nColumn Information:")
+#     for col in df.columns:
+#         insights.append(f"- Column '{col}' has {df[col].nunique()} unique values.")
 
-    # Missing Values
-    missing_values = df.isnull().sum()
-    insights.append("\nMissing Values:")
-    for col, count in missing_values.items():
-        if count > 0:
-            insights.append(f"- Column '{col}' has {count} missing values.")
+#     # Missing Values
+#     missing_values = df.isnull().sum()
+#     insights.append("\nMissing Values:")
+#     for col, count in missing_values.items():
+#         if count > 0:
+#             insights.append(f"- Column '{col}' has {count} missing values.")
 
-    # Most Common Values in Categorical Columns
-    categorical_columns = df.select_dtypes(include=["object"]).columns
-    for col in categorical_columns:
-        top_value = df[col].mode().iloc[0]
-        insights.append(f"\nMost common value in '{col}' column: {top_value}")
+#     # Most Common Values in Categorical Columns
+#     categorical_columns = df.select_dtypes(include=["object"]).columns
+#     for col in categorical_columns:
+#         top_value = df[col].mode().iloc[0]
+#         insights.append(f"\nMost common value in '{col}' column: {top_value}")
 
-    insights_text = "\n".join(insights)
+#     insights_text = "\n".join(insights)
 
-    # Compliment and Prompt
-    prompt = (
-        """You are Zara, a skilled project manager, data analyst, and petroleum engineer in the oil and gas industry.
-        Provide clear, concise answers (1-3 sentences) for project management or data research questions, considering dataset context. 
-        If a question is unclear, respond with wit. Use Markdown formatting and introduce yourself as Zara if asked.
-        """
-    )
+#     # Compliment and Prompt
+#     prompt = (
+#         """You are Zara, a skilled project manager, data analyst, and petroleum engineer in the oil and gas industry.
+#         Provide clear, concise answers (1-3 sentences) for project management or data research questions, considering dataset context. 
+#         If a question is unclear, respond with wit. Use Markdown formatting and introduce yourself as Zara if asked.
+#         """
+#     )
 
-    prompt = f"{prompt}\n\nContext:\n\n{insights_text}\n\nUser's Question: {question}"
+#     prompt = f"{prompt}\n\nContext:\n\n{insights_text}\n\nUser's Question: {question}"
 
-    return prompt
+#     return prompt
 
 # filtering code of python
 def extract_python_code(text):
-    pattern = r'```python\s(.*?)```'
+    pattern = r"```(?:python)?\s*(.*?)```"
     matches = re.findall(pattern, text, re.DOTALL)
     if not matches:
         return None
@@ -130,8 +130,12 @@ def safe_exec(code, globals=None, locals=None):
     exec_locals = locals if locals else {}
 
     # Redirect standard output to the buffer
-    with contextlib.redirect_stdout(output_buffer):
-        exec(code, exec_globals, exec_locals)
+    try:
+        with contextlib.redirect_stdout(output_buffer):
+            exec(code, exec_globals, exec_locals)
+            
+    except Exception as e:
+        return exec_locals, f"Error during execution:\n{str(e)}"
     
     # Get the output from the buffer
     exec_output = output_buffer.getvalue()
@@ -148,45 +152,72 @@ def render(app: Dash, source: DataSource) -> html.Div:
         Output(ids.ZARA_CHAT_AREA, "value"),
         Input(ids.ZARA_SUBMIT_BUTTON, 'n_clicks'),
         Input(ids.MEMORY_OUTPUT, 'data'),
+        Input(ids.ZARA_SEGMENTED_PREV, 'value'),
         State(ids.ZARA_CHAT_AREA, "value"),
         State(ids.RESPONSE_CHAT, 'children'),
         State("checkbox-plotting", "checked"),
         State("checkbox-pandasai", "checked"),
     )
     
-    def update_convo(n, data, question, cur, plotting_enabled, query_enabled):
+    def update_convo(n, data, data_label, question, cur, plotting_enabled, query_enabled):
         if question:
             df = pd.DataFrame(data)
-            prompt_content = prompt.generate_prompt(df, question)
+            
+            print(f"data label: {data_label}")
+            
+            metadata_description = """
+            1. **data_production**: Daily well production data containing time series for 7 wells across 5 blocks. Includes downhole and wellhead pressures, choke size, produced volumes (oil, gas, water, water injection), and calculated metrics such as moving averages, water cut, and gas-oil ratio. Contains many missing values, especially in sensor-derived columns like pressures and volumes.
+
+            2. **data_log**: Petrophysical log data for 9 wells. Depth-based records with high-resolution measurements such as gamma ray (GR), resistivity (RDEP), sonic (DTC), density (RHOB), porosity (NPHI), and caliper (CALI). Z_LOC and RHOB have significant missing data. Categorical lithology (LITH) is provided.
+
+            3. **geodata_blocks**: Geospatial metadata of 5 blocks including name, status (e.g., active, inactive), operator, well count, area size in square kilometers, and reserve estimation.
+
+            4. **geodata_wells**: Metadata for 9 wells, including name, orientation, status, purpose (e.g., exploration, development), type (e.g., vertical, deviated), and the block they belong to.
+            """
+            
+            prompt_content = prompt.generate_prompt(df, question, metadata_desc=metadata_description, table_name=data_label)
+            
+            print(prompt_content)
 
             messages = [
                 {"role": "system", "content": """You are Zara, an expert project manager and data analyst in the oil and gas industry.
-                                                Answer questions about datasets accurately using provided context.
+                                                Answer questions about datasets accurately using provided context. Do not create or assume data.
+                                                
                                                 Use Markdown for formatting and limit responses to 1-3 sentences unless generating code.
                                                 Use only pandas for data analysis or tables and Plotly for charts.
-                                                End pandas code with print() and only print(), and format code as: ```python <code>```
+                                                
+                                                Use Table Name **only** to get information of Table Name.
+                                                Use Columns Info to put information of column name for generating code.
+                                                
+                                                If the user asks you to do data analysis, you have to generate Python code using pandas to create a DataFrame from a dataset stored in (df). You always have to assume that dataset is stored in (df).
+                                                The result must be stored in <df_result>. Use only pandas.
+                                                
+                                                And if the user asks you to create a chart/visualization, generate Python code using Plotly to plot data from (df).
+                                                The plot must be stored in <fig>. Use only Plotly.
+                                                
+                                                Provide the code in the format: ```python <code>```
                                                  """},
                 {"role": "user", "content": prompt_content}
             ]
 
             if query_enabled:
                 messages.append({"role": "assistant", "content": """
-                    Generate Python code using pandas to create a DataFrame from a dataset stored in <df>.
+                    **More strictly generate Python code using pandas to create a DataFrame from a dataset stored in (df).
                     The result must be stored in <df_result>. Provide the code in the format:
                     ```python <code>```.
-                    Use only pandas.
+                    Use only pandas.**
                 """})
 
             if plotting_enabled:
                 messages.append({"role": "assistant", "content": """
-                    Generate Python code using Plotly to plot data from <df>. The plot must be stored in <fig>.
+                    **More strictly generate Python code using Plotly to plot data from <df>. The plot must be stored in (fig).
                     Provide the code in the format:
                     ```python <code>```.
-                    Use only Plotly.
+                    Use only Plotly.**
                 """})
 
             completion = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o-mini-2024-07-18",
                 messages=messages,
                 temperature=0.0,
                 max_tokens=4000,
@@ -201,7 +232,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
             if code is None:
                 question = [
                     dcc.Markdown(question, className="chat-item question"),
-                    dcc.Markdown(completion.choices[0].message.content, className="chat-item answer")
+                    dcc.Markdown(response_result, className="chat-item answer", dangerously_allow_html=False)
                 ]
                 return (question + cur if cur else question), None
             else:
@@ -212,8 +243,8 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 exec_globals = {"df": df, "px": px}
                 exec_locals, exec_output = safe_exec(code_with_import, globals=exec_globals)
                 
-                print(f"\n --- \n {exec_globals} \n")
-                print(f"\n --- \n {exec_locals} \n")
+                # print(f"\n --- \n {exec_globals} \n")
+                # print(f"\n --- \n {exec_locals} \n")
                 
                 # Initialize the outputs to default values
                 graph_output = None
@@ -228,10 +259,13 @@ def render(app: Dash, source: DataSource) -> html.Div:
                     result_df_series = exec_locals["df_result"]
                     
                     # Check if the DataFrame has a non-default index
-                    if result_df_series.index.name or result_df_series.index.names:
-                        result_df_series = result_df_series.reset_index()
+                    if isinstance(result_df_series, pd.Series):
+                        result_df = result_df_series.to_frame().reset_index()
+                    elif isinstance(result_df_series, pd.DataFrame):
+                        result_df = result_df_series.reset_index(drop=True)
+                    else:
+                        result_df = pd.DataFrame([result_df_series])
                         
-                    result_df = pd.DataFrame(result_df_series)
                     # graph_output = ""
                     data_output = dash_table.DataTable(
                         columns=[{"name": i, "id": i} for i in result_df.columns],
@@ -257,9 +291,9 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 ]
                 # Conditionally add graph_output and data_output to question
                 if graph_output is not None:
-                    question.append(html.Div(children=[graph_output], className="chat-item answer"))
+                    question.append(html.Div(children=[graph_output], className="chat-item answer", style={"overflowX": "auto", "maxHeight": "400px"}))
                 if data_output is not None:
-                    question.append(html.Div(children=[data_output], className="chat-item answer"))
+                    question.append(html.Div(children=[data_output], className="chat-item answer", style={"overflowX": "auto", "maxHeight": "400px"}))
                     
                 
                 return (question + cur if cur else question), None

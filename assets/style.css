@@ -593,7 +593,7 @@ body {
     .web-container .map-container .map-wrapper .left-side-map {
         grid-column: 1/4;
         overflow: auto;
-        max-height: 1000px;
+        max-height: 800px;
     }
 
     /* right grid-side map*/
@@ -604,7 +604,7 @@ body {
     /* tabs */
     .web-container .main-tabs {
         grid-column: 1/13;
-        margin: 80px 50px 20px 50px;
+        margin: 20px 50px 20px 50px;
     }
 
     .web-container .main-tabs .main-tablist {

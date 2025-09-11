@@ -94,7 +94,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 style={
                     # 'z-index':'0',
                     "width": "100%",
-                    "height": "1000px",
+                    "height": "800px",
                     # 'marginLeft':'0px',
                     # 'float':'right'
                 },
@@ -123,7 +123,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 style={
                     # 'z-index':'0',
                     "width": "100%",
-                    "height": "1000px",
+                    "height": "800px",
                     # 'marginLeft':'0px',
                     # 'float':'right'
                 },
@@ -152,7 +152,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
                 style={
                     # 'z-index':'0',
                     "width": "100%",
-                    "height": "1000px",
+                    "height": "800px",
                     # 'marginLeft':'0px',
                     # 'float':'right'
                 },
@@ -197,7 +197,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
             style={
                 # 'z-index':'0',
                 "width": "100%",
-                "height": "1000px",
+                "height": "800px",
                 # 'marginLeft':'0px',
                 # 'float':'right'
             },

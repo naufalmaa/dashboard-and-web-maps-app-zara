@@ -339,7 +339,7 @@ class DataSource:
         if column_name2 is not None:
             pt = self._data.pivot_table(
                 values=[column_name, column_name2],
-                index=[ProductionDataSchema.DATE],
+                index=[ProductionDataSchema.DATE, ProductionDataSchema.WELLBORE],
                 aggfunc="mean",
                 dropna=False,
             )
@@ -347,13 +347,15 @@ class DataSource:
         else:
             pt = self._data.pivot_table(
                 values=[column_name],
-                index=[ProductionDataSchema.DATE],
+                index=[ProductionDataSchema.DATE, ProductionDataSchema.WELLBORE],
                 aggfunc="mean",
                 dropna=False,
             )
         return (
-            pt.sort_values(ProductionDataSchema.DATE, ascending=True)
-            .interpolate(method="backfill")
+            pt.sort_values(by=[ProductionDataSchema.DATE, ProductionDataSchema.WELLBORE], ascending=True)
+            # .interpolate(method="linear")
+            .bfill()
+            .ffill()
             .reset_index()
         )
 

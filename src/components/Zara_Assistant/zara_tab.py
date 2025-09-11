@@ -18,13 +18,13 @@ def render(app: Dash, source: DataSource) -> html.Div:
     def create_table(data: str):
 
         df_production = source.df_production
-        df_gor = source.create_pivot_table_date_avg(ProductionDataSchema.WATER_CUT_DAILY, ProductionDataSchema.GAS_OIL_RATIO)
+        # df_gor = source.create_pivot_table_date_avg(ProductionDataSchema.WATER_CUT_DAILY, ProductionDataSchema.GAS_OIL_RATIO)
         df_log = source.df_log
         gdf_blocks = source.gdf_blocks
         gdf_wells = source.gdf_wells
         
-        production_columns = df_production.drop(columns=["MOVING_AVERAGE", "MOVING_AVERAGE_OIL", "MOVING_AVERAGE_WI", "WATER_CUT_DAILY", "GAS_OIL_RATIO"]).columns.to_list()
-        gor_columns = df_gor.columns.to_list()
+        production_columns = df_production.columns.to_list()
+        # gor_columns = df_gor.columns.to_list()
         log_columns = df_log.columns.to_list()
         blocks_columns = gdf_blocks.drop(columns=["tooltip","popup","geometry"]).columns.to_list()
         wells_columns = gdf_wells.drop(columns=["tooltip","popup","geometry"]).columns.to_list()
@@ -32,8 +32,8 @@ def render(app: Dash, source: DataSource) -> html.Div:
         if data == "data_production":
             return df_production.to_dict("records"), [{"field": i} for i in production_columns]
         
-        if data == 'data_gor':
-            return df_gor.to_dict('records'), [{'field':i} for i in gor_columns]
+        # if data == 'data_gor':
+        #     return df_gor.to_dict('records'), [{'field':i} for i in gor_columns]
         
         elif data == "data_log":
             return df_log.to_dict("records"), [{"field": i} for i in log_columns]
@@ -61,7 +61,7 @@ def render(app: Dash, source: DataSource) -> html.Div:
                         value="data_production",
                         data=[
                         {"value": "data_production", "label": "Production Data"},
-                        {'value': 'data_gor', 'label': 'Water Cut Daily Gas Ratio'},
+                        # {'value': 'data_gor', 'label': 'Water Cut Daily Gas Ratio'},
                         {"value": "data_log", "label": "Log Data"},
                         {"value": "geodata_blocks", "label": "Blocks Data"},
                         {"value": "geodata_wells", "label": "Wells Data"},
