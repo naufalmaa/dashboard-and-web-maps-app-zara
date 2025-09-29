@@ -9,3 +9,4 @@ config.ini
 *.pyc
 experiment
 pages/login_page.py
+*.ipynb

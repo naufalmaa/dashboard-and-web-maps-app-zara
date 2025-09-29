@@ -34,6 +34,10 @@ def render(app: Dash, source: DataSource) -> html.Div:
         series_geometry = edited_blocks.to_dataframe_geopandas_temp
         series_geometry_well = edited_wells.to_dataframe_geopandas_temp
         # edited
+        
+        # print(f"Test Blocks Loaded: {'Empty' if series_geometry.empty else f'{(series_geometry.columns)} features'}")
+        # print(f"Test Points Loaded: {'Empty' if series_geometry_well.empty else f'{(series_geometry_well.columns)} features'}")
+
 
         layer_blocks = dl.GeoJSON(
             data=json.loads(series_geometry.to_json()),

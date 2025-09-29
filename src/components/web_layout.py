@@ -6,16 +6,13 @@ from src.components import ids, cns
 
 from ..data.source import DataSource
 
-from .header import (
-    headerbar
-)
+from .header import headerbar
 
-from .footer import (
-    footerbar
-)
+from .footer import footerbar
 
 from .web_maps import (
-    wmaps_layout
+    wmaps_layout,
+    skkmigas_layout,
     # filter_maps,
     # restart_button,
     # leaflet_maps,
@@ -51,12 +48,9 @@ from .gng_analysis import (
     gng_layout,
     # well_log_filter,
     # well_log_graph,
-    
 )
 
-from .Zara_Assistant import (
-    zara_layout
-)
+from .Zara_Assistant import zara_layout
 
 from .web_maps.data_color_map import colormap
 
@@ -67,13 +61,12 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
         children=[
             # # div navbar (header(1))
             # html.Div(
-            #     className=cns.NAVBAR, 
+            #     className=cns.NAVBAR,
             #     children=[
             #         # html.H1("Navigation Bar")
             #         headerbar.create_layout()
             #     ]
             # ),
-            
             # # div for webmaps
             # html.Div(
             #     className=cns.MAP_CONTAINER,
@@ -81,7 +74,6 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
             #         wmaps_layout.create_layout_map(app, source)
             #     ]
             # ),
-            
             # div for tab and tab list after map
             dmc.Tabs(
                 [
@@ -91,46 +83,110 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
                             dmc.Tab("Operation Analysis", value="2"),
                             dmc.Tab("Production Performance Analysis", value="3"),
                             dmc.Tab("Geology & Geophysics Analysis", value="4"),
-                            # dmc.Tab("Cost Analysis", value="4"),
+                            dmc.Tab(
+                                html.A(
+                                    "SEGY & LAS Viewer",
+                                    href="http://127.0.0.1:8050/",
+                                    target="_blank",
+                                    style={
+                                        "textDecoration": "none",
+                                        "color": "inherit",
+                                    },
+                                ),
+                                value="5",
+                            ),
                         ],
-                        className=cns.MAIN_TABLIST, position='center', grow=True
+                        className=cns.MAIN_TABLIST,
+                        position="center",
+                        grow=True,
                     ),
-                    
-                    # Overview Wmaps
-                    dmc.TabsPanel(children=[
-                        # div for webmaps
-                        html.Div(
-                            className=cns.MAP_CONTAINER,
-                            children=[
-                                wmaps_layout.create_layout_map(app, source)
-                            ]
-                        ),
-                    ], value="1", className=cns.OVW_CONTAINER),
-                    
+                    # # # Overview Wmaps
+                    dmc.TabsPanel(
+                        children=[
+                            dmc.Tabs(
+                                children=[
+                                    dmc.TabsList(
+                                        [
+                                            dmc.Tab("Project Aceh", value="8"),
+                                            dmc.Tab("SKK Demo", value="9"),
+                                        ],
+                                        # className=cns.MAIN_TABLIST,
+                                        position="center",
+                                        grow=True,
+                                    ),
+                                    # div for webmaps
+                                    dmc.TabsPanel(
+                                        children=[
+                                            html.Div(
+                                                className=cns.MAP_CONTAINER,
+                                                children=[
+                                                    wmaps_layout.create_layout_map(
+                                                        app, source
+                                                    )
+                                                ],
+                                            )
+                                        ],
+                                        value="8",
+                                        className=cns.OVW_CONTAINER,
+                                    ),
+                                    dmc.TabsPanel(
+                                        children=[
+                                            html.Div(
+                                                className=cns.MAP_CONTAINER,
+                                                children=[
+                                                    skkmigas_layout.create_layout_skkmigas_map(
+                                                        app, source
+                                                    )
+                                                ],
+                                            )
+                                        ],
+                                        value="9",
+                                        className=cns.OVW_CONTAINER,
+                                    ),
+                                ],
+                                value="8",
+                                className=cns.MAIN_TABS,
+                            )
+                        ],
+                        value="1",
+                        className=cns.OVW_CONTAINER,
+                    ),
                     # Operation Analysis (chatbot, preview data, about data)
-                    dmc.TabsPanel(overview_layout.create_layout(app, source), value="2", className=cns.OVW_CONTAINER),
-                    
+                    dmc.TabsPanel(
+                        overview_layout.create_layout(app, source),
+                        value="2",
+                        className=cns.OVW_CONTAINER,
+                    ),
                     # tabs for production performance analysis
-                    dmc.TabsPanel(production_performance_layout.create_layout(app, source), value="3", className=cns.PPD_CONTAINER),
-                    
+                    dmc.TabsPanel(
+                        production_performance_layout.create_layout(app, source),
+                        value="3",
+                        className=cns.PPD_CONTAINER,
+                    ),
                     # tabs for gng analysis
-                    dmc.TabsPanel(gng_layout.create_layout(app, source), value="4", className=cns.GNG_CONTAINER),
-                    
-                    # tabs for cost analysis
-                    # dmc.TabsPanel("This is for cost analysis layout. (in progress)", value="4", className=cns.CAD_CONTAINER),
+                    dmc.TabsPanel(
+                        gng_layout.create_layout(app, source),
+                        value="4",
+                        className=cns.GNG_CONTAINER,
+                    ),
+                    # tabs for segy viewer
+                    dmc.TabsPanel(
+                        "You will be redirected to SEGY & LAS Viewer",
+                        value="5",
+                        className=cns.CAD_CONTAINER,
+                    ),
                 ],
                 value="1",
-                variant="default",
+                # value="2",
+                # variant="default",
                 className=cns.MAIN_TABS,
             ),
-
+            #     ]
+            # )
             html.Div(
                 className=cns.ZARA_FLOAT_BUTTON,
-                children=[
-                    zara_layout.create_layout(app,source)
-                ]
+                children=[zara_layout.create_layout(app, source)],
             ),
-            
             # Div Footer (Footer(6))
             html.Div(
                 className=cns.FOOTER_WEB,
@@ -141,3 +197,5 @@ def create_layout(app: Dash, source: DataSource) -> html.Div:
             ),
         ],
     )
+    #     ]
+    # )

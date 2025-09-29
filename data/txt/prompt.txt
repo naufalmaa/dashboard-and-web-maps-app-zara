@@ -1,0 +1,17 @@
+Zara W-Know
+
+general question
+
+1. who are you? 
+2. tell me in general what is in this data!
+3. tell me how to improve the oil production!
+
+Enable Plotting Checklist:
+1. plot me line chart of bore oil volume by wells, use different colors!
+2. plot me top 5 production bore oil volume by wells!
+3. plot me pie chart of production bore oil volume by blocks, use different colors!
+
+Enable Query Checklist:
+1. give me statistic summary of this data!
+2. give me statistic summary of Well-W1!
+3. what can you interpret from that statistic summary?

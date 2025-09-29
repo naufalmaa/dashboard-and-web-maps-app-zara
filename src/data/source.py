@@ -23,6 +23,8 @@ class DataSource:
     _geodata_blocks: Optional[gpd.GeoDataFrame] = None
     _geodata_wells: Optional[gpd.GeoDataFrame] = None
     _data_log: Optional[pd.DataFrame] = None
+    _geodata_sbk_block: Optional[gpd.GeoDataFrame] = None
+    _geodata_sbk_point: Optional[gpd.GeoDataFrame] = None
 
     # main filter map
     # for blocks
@@ -377,6 +379,18 @@ class DataSource:
     # property for filtering data
     # property it's about something that we really need to do with all the properties of the dataframe:)
     # basic = create dataframe of pandas to be called
+    
+    # get points and blocks data on sebuku
+    @property
+    def gdf_sbk_points(self):
+        gdf = gpd.GeoDataFrame(self._geodata_sbk_point)
+        return gdf
+    
+    @property
+    def gdf_sbk_blocks(self):
+        gdf = gpd.GeoDataFrame(self._geodata_sbk_block)
+        return gdf
+    
     
     # get production data
     @property

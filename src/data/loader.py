@@ -140,7 +140,75 @@ def load_all_wells(path: str) -> gpd.GeoDataFrame:
     
     return all_wells
 
-################################################################
+##################################################################
+
+# sbk viewer
+
+def create_tooltip_sbk_points_column(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    gdf["tooltip"] = gdf["WELL_NAME"]
+    return gdf["tooltip"]
+
+def create_popup_sbk_points_column(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    gdf["popup"] = '''
+
+    <strong><H4 style="margin-top:10px; margin-bottom:20px; font-family:Ubuntu, sans-serif; font-size: 25px; color:#3F72AF;">
+    ''' + gdf['WELL_NAME'] + '</H4></strong>' + """
+
+
+    <table style="height: 50px; width: 250px;">
+        <tbody>
+        <tr>
+        <th class="data-cell-left"><strong>Basin Name</strong></th>
+        <td class="data-cell-right"> """ + gdf['BASIN_NAME'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Operator</strong></th>
+        <td class="data-cell-right"> """ + gdf['OPERATOR_N'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Contract</strong></th>
+        <td class="data-cell-right"> """ + gdf['CONTRACT_N'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Block Name</strong></th>
+        <td class="data-cell-right"> """ + gdf['BLOCK_NAME'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Class</strong></th>
+        <td class="data-cell-right"> """ + gdf['WELL_CLASS'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Technical</strong></th>
+        <td class="data-cell-right"> """ + gdf['TECHNICAL_'] + """</td>
+        </tr>
+        <tr>
+        <th class="data-cell-left"><strong>Content</strong></th>
+        <td class="data-cell-right"> """ + gdf['CONTENT'] + """</td>
+        </tr>
+        """
+        
+    return gdf["popup"]
+
+def load_sbk_points(path: str) -> gpd.GeoDataFrame:
+    
+    all_wells = gpd.read_file(
+        path
+    )
+    all_wells["tooltip"] = create_tooltip_sbk_points_column(all_wells)
+    all_wells["popup"] = create_popup_sbk_points_column(all_wells)
+    
+    return all_wells
+
+def load_sbk_block(path: str) -> gpd.GeoDataFrame:
+    
+    all_block = gpd.read_file(
+        path
+    )
+    
+    return all_block
+
+
+##################################################################
 
 class LogDataSchema:
     WELLBORE = "WELL_BORE_CODE"

@@ -9,6 +9,8 @@ from src.data.loader import (
     load_all_blocks,
     load_all_wells,
     load_log_data,
+    load_sbk_points,
+    load_sbk_block
 )
 from src.components.header import (
     headerbar
@@ -22,6 +24,8 @@ PRODUCTION_DATA_PATH = "./data/csv/aceh_production_data_daily_rev.csv"
 BLOCK_DATA_PATH = "./data/geojson/all_blocks_rev.geojson"
 WELL_DATA_PATH = "./data/geojson/all_wells_rev.geojson"
 LOG_DATA_PATH = "./data/csv/aceh_log_data_rev.csv"
+SBK_POINT_PATH = "./data/geojson/sbk_skkmigas_point.geojson"
+SBK_BLOCK_PATH = "./data/geojson/sbk_skkmigas_blok.geojson"
 
 
 data_well = load_well_production_data(PRODUCTION_DATA_PATH)
@@ -32,11 +36,18 @@ geodata_well = load_all_wells(WELL_DATA_PATH)
 
 # 040823
 data_log = load_log_data(LOG_DATA_PATH)
+
+geodata_sbk_point = load_sbk_points(SBK_POINT_PATH)
+geodata_sbk_block = load_sbk_block(SBK_BLOCK_PATH)
+
+
 data = DataSource(
     _data=data_well,
     _geodata_blocks=geodata_block,
     _geodata_wells=geodata_well,
     _data_log=data_log,
+    _geodata_sbk_point=geodata_sbk_point,
+    _geodata_sbk_block=geodata_sbk_block
 )
 
 app = Dash(
@@ -89,7 +100,7 @@ def create_header_layout() -> html.Div:
                                 # "float": "left",
                             # },
                         ),
-                        dmc.Anchor("Sign in", href="/login", underline=False),
+                        dmc.Anchor("Sign in", href="/", underline=False),
                         dmc.Text("     |     ", color="#e9ecef"),
                         dmc.Image(
                         src="/assets/waviv_logo.jpg",
